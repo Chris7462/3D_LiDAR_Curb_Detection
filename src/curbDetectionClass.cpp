@@ -35,10 +35,10 @@ inline bool compDown(const pcl::PointXYZI &a, const pcl::PointXYZI &b) {
  * @param a The first point.
  * @param b The second point.
  * @return true if a.z < b.z
- */
 inline bool compVert(const pcl::PointXYZI &a, const pcl::PointXYZI &b) {
   return a.z < b.z;
 }
+ */
 
 void CurbDetectionClass::init(int layer_num) {
   // Set the parameters of the area of interest. The four parameters set the rectangle of this region of interest.
@@ -57,8 +57,9 @@ void CurbDetectionClass::init(int layer_num) {
   //m_curb_fine = 2;
 
   // ring_index is the layer id. Total is 64. We select layer from 11 to 11+layer_num.
-  m_ring_index = std::vector<int>(layer_num);
-  std::iota(m_ring_index.begin(), m_ring_index.end(), 11);
+  //m_ring_index = std::vector<int>(layer_num);
+  //std::iota(m_ring_index.begin(), m_ring_index.end(), 25);
+  m_ring_index = std::vector<int>{25, 27, 30, 32, 35, 38, 40, 41, 42, 43};
 }
 
 void CurbDetectionClass::cleanPoints(const pcl::PointCloud<pcl::PointXYZI> &pc_in) {
@@ -85,13 +86,13 @@ void CurbDetectionClass::cleanPoints(const pcl::PointCloud<pcl::PointXYZI> &pc_i
     }
 
     // Discard vehicle point clouds
-    //if ( sqrt(point.x * point.x + point.y * point.y + point.z * point.z <= 3.0F ) ) {
-    //    continue;
-    //}
+    if ( sqrt(point.x * point.x + point.y * point.y + point.z * point.z <= 2.5F ) ) {
+        continue;
+    }
 
     // Discard points outside of the box
-    if ((point.y > m_left) || (point.x < m_right) ||
-        (point.x < m_backward) || (point.x > m_forward) ||
+    if ((point.x < m_backward) || (point.x > m_forward) ||
+        (point.y > m_left) || (point.x < m_right) ||
         (point.z > m_up) || (point.z < m_down)) {
       continue;
     }
@@ -113,7 +114,7 @@ void CurbDetectionClass::cleanPoints(const pcl::PointCloud<pcl::PointXYZI> &pc_i
 
 
 pcl::PointCloud<pcl::PointXYZI> CurbDetectionClass::detector() {
-  if( pointcloud_rings.empty() && pointcloud_front_rings.empty() ) {
+  if( pointcloud_rings.empty() ) {//&& pointcloud_front_rings.empty() ) {
     return pcl::PointCloud<pcl::PointXYZI>{};
   }
 
@@ -194,25 +195,25 @@ void CurbDetectionClass::slideForGettingPoints(const pcl::PointCloud<pcl::PointX
     float z_dis = 0;
 
     for (int j = 0; j < w_d; ++j) {
-      float dis = fabs(points[i + j].z - points[i + j + 1].z);
+      float dis = fabs(points[i+j].z - points[i+j+1].z);
       if (dis > z_dis) {
         z_dis = dis;
-        idx = i + j + 1;
+        idx = i+j;
       }
-      if (points[i + j].z < z_min) {
-        z_min = points[i + j].z;
+      if (points[i+j].z < z_min) {
+        z_min = points[i+j].z;
       }
-      if (points[i + j].z > z_max) {
-        z_max = points[i + j].z;
+      if (points[i+j].z > z_max) {
+        z_max = points[i+j].z;
       }
     }
 
     if (fabs(z_max - z_min) >= z_thresh) {
-      for (int j = 0; j < (w_d - 1); ++j) {
-        float p_dist = sqrt(((points[i + j].y - points[i + 1 + j].y) * (points[i + j].y - points[i + 1 + j].y))
-                          + ((points[i + j].x - points[i + 1 + j].x) * (points[i + j].x - points[i + 1 + j].x)));
+      for (int j = 0; j < (w_d-1); ++j) {
+        float p_dist = sqrt(((points[i+j].y - points[i+j+1].y) * (points[i+j].y - points[i+j+1].y))
+                          + ((points[i+j].x - points[i+j+1].x) * (points[i+j].x - points[i+j+1].x)));
         if (p_dist >= xy_thresh) {
-          curb_container.push_back(points[j + i + 1]);
+          curb_container.push_back(points[j+i]);
           return;
         }
       }

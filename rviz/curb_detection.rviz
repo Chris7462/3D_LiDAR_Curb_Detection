@@ -3,7 +3,9 @@ Panels:
     Help Height: 78
     Name: Displays
     Property Tree Widget:
-      Expanded: ~
+      Expanded:
+        - /RawPointClouds1
+        - /PointCloud21
       Splitter Ratio: 0.5156695246696472
     Tree Height: 763
   - Class: rviz/Selection
@@ -24,7 +26,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: CurbDetection
+    SyncSource: RawPointClouds
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
@@ -79,7 +81,7 @@ Visualization Manager:
       Use rainbow: true
       Value: true
     - Alpha: 1
-      Autocompute Intensity Bounds: false
+      Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
         Max Value: 10
         Min Value: -10
@@ -93,15 +95,15 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Min Color: 255; 255; 255
-      Name: CurbDetection
+      Min Color: 0; 0; 0
+      Name: PointCloud2
       Position Transformer: XYZ
       Queue Size: 10
       Selectable: true
-      Size (Pixels): 5
-      Size (m): 1
-      Style: Flat Squares
-      Topic: /curb_detection_result
+      Size (Pixels): 10
+      Size (m): 0.009999999776482582
+      Style: Points
+      Topic: /curb_detection
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: false
@@ -150,9 +152,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.9503978490829468
+      Pitch: 0.9553978443145752
       Target Frame: <Fixed Frame>
-      Yaw: 1.5753976106643677
+      Yaw: 1.5703976154327393
     Saved: ~
 Window Geometry:
   Displays:

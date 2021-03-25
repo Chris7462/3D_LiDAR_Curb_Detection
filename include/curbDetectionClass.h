@@ -25,7 +25,7 @@ class CurbDetectionClass
     void cleanPoints(const pcl::PointCloud<pcl::PointXYZI> &pc_in);
     pcl::PointCloud<pcl::PointXYZI> detector();
     void slideForGettingPoints(const pcl::PointCloud<pcl::PointXYZI> &points, pcl::PointCloud<pcl::PointXYZI> &curb_container,
-                               int w_0 = 10, int w_d = 20, float xy_thresh = 1.0F, float z_thresh = 0.12F);
+                               int w_0 = 10, int w_d = 30, float xy_thresh = 0.1F, float z_thresh = 0.06F);
   private:
     int getRingID(const pcl::PointXYZI &point);
 
@@ -33,7 +33,7 @@ class CurbDetectionClass
     pcl::PointCloud<pcl::PointXYZI> curb_right {};
     //pcl::PointCloud<pcl::PointXYZI> curb_front {};
     std::vector<pcl::PointCloud<pcl::PointXYZI>> pointcloud_rings {};
-    std::vector<pcl::PointCloud<pcl::PointXYZI>> pointcloud_front_rings {};
+    //std::vector<pcl::PointCloud<pcl::PointXYZI>> pointcloud_front_rings {};
 
     // parameters help to select the detection window
     float m_forward;
