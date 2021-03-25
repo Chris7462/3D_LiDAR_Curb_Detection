@@ -1,0 +1,7 @@
+detector_subscriber_topic_name: "points_raw"
+detector_subscriber_queue_size: 10
+forward_range: 30
+backward_range: 0
+left_range: 10
+right_range: 10
+down_range: -1.5
