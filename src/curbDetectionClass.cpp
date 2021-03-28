@@ -44,9 +44,9 @@ void CurbDetectionClass::init(int layer_num) {
   // Set the parameters of the area of interest. The four parameters set the rectangle of this region of interest.
   m_forward = 30.0F;
   m_backward = 0.0F;
-  m_left = 10.0F;
+  m_left = 20.0F;
   m_right = -10.0F;
-  m_up = 0.0F;
+  //m_up = 0.0F;
   m_down = -1.5F;
 
   // Set the parameters of the front curb bounding box.
@@ -92,8 +92,9 @@ void CurbDetectionClass::cleanPoints(const pcl::PointCloud<pcl::PointXYZI> &pc_i
 
     // Discard points outside of the box
     if ((point.x < m_backward) || (point.x > m_forward) ||
-        (point.y > m_left) || (point.x < m_right) ||
-        (point.z > m_up) || (point.z < m_down)) {
+        (point.y < m_right) || (point.y > m_left) ||
+        (point.z < m_down)) {
+        //(point.z > m_up) || (point.z < m_down)) {
       continue;
     }
 
@@ -131,7 +132,7 @@ pcl::PointCloud<pcl::PointXYZI> CurbDetectionClass::detector() {
       // Separate the left and right points and save them to the corresponding point cloud.
       for ( std::size_t idx = 0; idx < numOfPointsInTheRing; ++idx ) {
         point = pointsInTheRing[idx];
-        if (point.x >= 0) {
+        if (point.y >= 0) {
           pc_left.push_back(point);
         } else {
           pc_right.push_back(point);
