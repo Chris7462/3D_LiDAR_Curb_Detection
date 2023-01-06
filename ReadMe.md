@@ -1,8 +1,8 @@
 # 3D Lidar curb detection
 ## 1. Moriyama dataset
-Download the Moriyama rosbag from Autoware website: [Moriyama 150324](https://www.autoware.ai/sample/sample_moriyama_150324.tar.gz).
+Download the Moriyama rosbag from Autoware website: [Moriyama 150324](https://autoware-ai.s3.us-east-2.amazonaws.com/sample_moriyama_150324.tar.gz).
 ```bash
-$ wget https://www.autoware.ai/sample/sample_moriyama_150324.tar.gz
+$ wget https://autoware-ai.s3.us-east-2.amazonaws.com/sample_moriyama_150324.tar.gz
 $ tar -zxvf sample_moriyama_150324.tar.gz
 ```
 
